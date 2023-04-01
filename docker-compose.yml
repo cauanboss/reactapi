@@ -1,0 +1,67 @@
+services:
+  mongodb: 
+    container_name: mongo
+    volumes:
+      - ./mongodb/data/db:/data/db
+    image: mongo
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: admin
+    #   MONGO_INITDB_ROOT_PASSWORD: admin    
+    expose:
+       - 27017
+    network_mode: host
+  nginx:
+    # build: ./nginx/.
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf/conf.d:/etc/nginx/conf.d
+    ports:
+    - 80
+    command: [nginx-debug, '-g', 'daemon off;']
+    network_mode: host
+  golang:
+    container_name: golang
+    build: ./api/golang/.
+    ports:
+      - 8101
+    network_mode: host
+    volumes:
+      - ./api/golang.:/usr/app
+    depends_on:
+      - "rabbit"
+      - "kafka"
+  nest:
+    container_name: nest
+    build: ./api/nest/.
+    ports:
+      - 8102
+    network_mode: host
+    volumes:
+      - ./api/nest.:/usr/app
+    depends_on:
+      - "rabbit"
+      - "kafka"
+  ui:
+    container_name: ui
+    build: ./ui/.
+    network_mode: host
+    volumes:
+      - ./ui/.:/usr/app
+    ports:
+      - 3000
+    depends_on:
+      - "nest"
+      - "golang"
+      - "nginx"
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq
+    network_mode: host
+  kafka:
+    container_name: kafka
+    image: bitnami/kafka
+    network_mode: host
+
+

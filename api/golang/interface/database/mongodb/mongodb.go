@@ -1,28 +1,27 @@
 package mongodb
 
 import (
-	"api/core/user/model"
 	"context"
 	"errors"
 	"fmt"
 	"log"
 
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var collection *mongo.Collection
+var ctx = context.TODO()
 
 func createClient() (*mongo.Collection, error) {
-	co := options.Client().ApplyURI("mongodb://localhost:27017")
-	client, err := mongo.Connect(context.TODO(), co)
+	co := options.Client().ApplyURI("mongodb://mongo:27017")
+	client, err := mongo.Connect(ctx, co)
 	if err != nil {
 		fmt.Println(err)
 		return nil, errors.New("Error")
 	}
 
-	var e = client.Ping(context.TODO(), nil)
+	var e = client.Ping(ctx, nil)
 
 	if e != nil {
 		fmt.Println(e)
@@ -30,18 +29,11 @@ func createClient() (*mongo.Collection, error) {
 	}
 
 	if collection != nil {
+		fmt.Print("already connected!!")
 		return collection, nil
 	}
-	collection = client.Database("Udemy").Collection("users")
-
-	filter := bson.M{"name": "Cauan"}
-
-	u := model.User{}
-
-	collection.FindOne(context.TODO(), filter).Decode(&u)
-
-	fmt.Println(u)
-
+	collection = client.Database("reactapi").Collection("users")
+	fmt.Print("OK")
 	return collection, err
 }
 

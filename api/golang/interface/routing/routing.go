@@ -9,7 +9,7 @@ import (
 func GetRoutes() *mux.Router {
 	app := mux.NewRouter()
 
-	userApp := app.PathPrefix("/user").Subrouter()
-	user.App(userApp)
+	userController := app.PathPrefix("/user").Subrouter()
+	user.UserController(userController)
 	return app
 }

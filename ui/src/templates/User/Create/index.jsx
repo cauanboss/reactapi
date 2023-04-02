@@ -7,12 +7,16 @@ export const Create = () => {
   const [nameState, setNameState] = useState('');
   const [genderState, setGenderState] = useState('');
   const [ageState, setAgeState] = useState(0);
+  const [usernameState, setUsernameState] = useState(0);
+  const [passwordState, setPasswordState] = useState(0);
 
   const save = async () => {
     const userData = {
       name: nameState,
       gender: genderState,
       age: Number(ageState),
+      password: passwordState,
+      username: usernameState,
     };
 
     try {
@@ -40,12 +44,20 @@ export const Create = () => {
   const updateAge = (e) => {
     setAgeState(e.target.value);
   };
+  const updateUsername = (e) => {
+    setUsernameState(e.target.value);
+  };
+  const updatePassword = (e) => {
+    setPasswordState(e.target.value);
+  };
 
   return (
     <Div>
       Name: <Input onChange={updateName} />
       Gender: <Input onChange={updateGender} />
       Age: <Input onChange={updateAge} />
+      Age: <Input onChange={updateUsername} />
+      Age: <Input onChange={updatePassword} />
       <Button onClick={save}>Save</Button>
       <Button onClick={cancel}>Cancelar</Button>
     </Div>

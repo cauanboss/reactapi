@@ -11,6 +11,7 @@ export const User = () => {
     try {
       const response = await getUser();
       const user = await response.json();
+      console.log(user);
       userRef.current = user;
       setUserDataContext(userRef.current);
     } catch (error) {

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { deleteUser, getUser } from '../../external/user';
+import { deleteUser, getUser, getUsers } from '../../external/user';
 import { ListUser } from './ListUser';
 
 export const User = () => {
@@ -9,7 +9,7 @@ export const User = () => {
 
   const fetchData = async () => {
     try {
-      const response = await getUser();
+      const response = await getUsers();
       const user = await response.json();
       console.log(user);
       userRef.current = user;
@@ -23,22 +23,13 @@ export const User = () => {
     fetchData();
   }, [userRef]);
 
-  const editEvent = (e) => {
-    console.log('edit', e);
-  };
-
-  const deleteEvent = async (e) => {
-    const del = await deleteUser(e);
-    console.log('delete', e, del);
-  };
-
   return (
     <>
       <div>
         <Link to="/user/create">Create</Link>
       </div>
       <div>
-        <ListUser userData={userDataContext} editEvent={editEvent} deleteEvent={deleteEvent} />
+        <ListUser userData={userDataContext} />
       </div>
     </>
   );

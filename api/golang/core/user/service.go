@@ -9,6 +9,7 @@ import (
 	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type UserRepository struct {
@@ -30,10 +31,10 @@ func (ur *UserRepository) FindOne(filter interface{}) model.User {
 	return u
 }
 
-func (ur *UserRepository) FindAll() []model.User {
+func (ur *UserRepository) FindAll() []dto.FindUser {
 	ctx := context.TODO()
-	users := []model.User{}
-	cursor, err := ur.client.Find(ctx, model.User{})
+	users := []dto.FindUser{}
+	cursor, err := ur.client.Find(ctx, bson.M{})
 	if err != nil {
 		panic(err)
 	}

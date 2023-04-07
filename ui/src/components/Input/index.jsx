@@ -1,7 +1,8 @@
 import Prop from 'prop-types';
 
-export const Input = ({ onChange }) => {
-  return <input onChange={onChange} type="text" />;
+// eslint-disable-next-line react/prop-types
+export const Input = ({ onChange, value }) => {
+  return <input value={value || ''} onChange={onChange} type="text" />;
 };
 
 Input.propTypes = {

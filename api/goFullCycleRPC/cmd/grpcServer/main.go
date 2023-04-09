@@ -7,9 +7,10 @@ import (
 	"main/internal/service"
 	"net"
 
-	_ "github.com/mattn/go-sqlite3"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
@@ -19,11 +20,11 @@ func main() {
 	}
 	defer db.Close()
 
-	userDB := database.NewUser(db)
-	userService := service.NewUserService(*userDB)
+	categoryDb := database.NewCategory(db)
+	categoryService := service.NewCategoryService(*categoryDb)
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterUserServiceServer(grpcServer, userService)
+	pb.RegisterCategoryServiceServer(grpcServer, categoryService)
 	reflection.Register(grpcServer)
 
 	lis, err := net.Listen("tcp", ":50051")

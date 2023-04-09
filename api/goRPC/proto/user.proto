@@ -9,10 +9,16 @@ message User {
     string password = 4;
 }
 
+message blank{}
+
 message CreateUserRequest {
     string name = 1;
     string email = 2;
     string password = 3;
+}
+
+message UserList {
+    repeated User users = 1;
 }
 
 message GetUserRequest {
@@ -21,5 +27,8 @@ message GetUserRequest {
 
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (User) {}
+    // rpc CreateUserStream(stream CreateUserRequest) returns (UserList) {}
+    // rpc CreateUserStreamBidirectional(stream CreateUserRequest) returns (stream User) {}
+    rpc ListUsers(blank) returns (UserList) {}
     rpc GetUser(GetUserRequest) returns (User) {}
 }

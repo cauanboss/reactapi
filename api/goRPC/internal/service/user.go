@@ -42,3 +42,21 @@ func (c *UserService) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.U
 	}
 	return userResponse, nil
 }
+
+func (c *UserService) ListUsers(ctx context.Context, in *pb.Blank) (*pb.UserList, error) {
+	users, err := c.UserDB.FindAll()
+	if err != nil {
+		return nil, err
+	}
+	var usersResponse []*pb.User
+	for _, user := range users {
+		userResponse := &pb.User{
+			Id:       user.ID,
+			Name:     user.Name,
+			Email:    user.Email,
+			Password: user.Password,
+		}
+		usersResponse = append(usersResponse, userResponse)
+	}
+	return &pb.UserList{Users: usersResponse}, nil
+}

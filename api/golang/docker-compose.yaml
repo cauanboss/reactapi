@@ -1,0 +1,17 @@
+version: '3'
+services:
+  golang:
+    container_name: golang
+    build: .
+    ports:
+      - 8101:8101
+      - 50051:50051/tcp
+    networks:
+      - backend
+    volumes:
+      - .:/usr/app
+    depends_on:
+      - mongo
+networks:
+  backend:
+    driver: bridge

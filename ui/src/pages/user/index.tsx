@@ -1,13 +1,13 @@
 import { UserList } from "./list";
 
-export const getServerSideProps = async() => {
+export const getServerSideProps = () => {
   return {
-    props: {name: 'User'},
-  }
-}
+    props: { name: "User" },
+  };
+};
 
-const User = (a: any): JSX.Element => {
-  return <UserList/>;
+const User = (): JSX.Element => {
+  return <UserList />;
 };
 
 export default User;

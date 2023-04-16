@@ -29,18 +29,16 @@ services:
       - ui
   golang:
     container_name: golang
-    build:
-      context: ./api/golang/
+    build: ./api/golang/.
     ports:
       - 8101:8101
+      - 50051:50051/tcp
     networks:
       - backend
     volumes:
       - ./api/golang/:/usr/app
     depends_on:
       - mongo
-    #   - "rabbit"
-    #   - "kafka"
   # nest:
   #   container_name: nest
   #   build: ./api/nest/.
@@ -52,6 +50,8 @@ services:
     # depends_on:
     #   - "rabbit"
     #   - "kafka"
+
+
   ui:
     container_name: ui
     build: ./ui/.
@@ -63,14 +63,7 @@ services:
       - 3000:3000
     depends_on:
       - "golang"
-  # rabbit:
-  #   container_name: rabbit
-  #   image: rabbitmq
-  #   network_mode: host
-  # kafka:
-  #   container_name: kafka
-  #   image: bitnami/kafka
-  #   network_mode: host
+
 networks:
   backend:
     driver: bridge

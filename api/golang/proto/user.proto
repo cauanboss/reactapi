@@ -1,0 +1,38 @@
+syntax = "proto3";
+package pb;
+option go_package = "internal/pb";
+
+message User {
+    string id = 1;
+    string name = 2;
+    string username = 3;
+    string password = 4;
+    int32 age = 5;
+    string gender = 6;
+}
+
+message blank{}
+
+message CreateUserRequest {
+    string name = 2;
+    string username = 3;
+    string password = 4;
+    int32 age = 5;
+    string gender = 6;
+}
+
+message UserList {
+    repeated User users = 1;
+}
+
+message GetUserRequest {
+    string id = 1;
+}
+
+service UserService {
+    rpc CreateUser(CreateUserRequest) returns (User) {}
+    // rpc CreateUserStream(stream CreateUserRequest) returns (UserList) {}
+    // rpc CreateUserStreamBidirectional(stream CreateUserRequest) returns (stream User) {}
+    rpc ListUsers(blank) returns (UserList) {}
+    rpc GetUser(GetUserRequest) returns (User) {}
+}

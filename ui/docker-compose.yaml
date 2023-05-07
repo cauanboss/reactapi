@@ -9,8 +9,6 @@ services:
       - .:/usr/app
     ports:
       - 3000:3000
-    depends_on:
-      - "golang"
 networks:
   backend:
     driver: bridge

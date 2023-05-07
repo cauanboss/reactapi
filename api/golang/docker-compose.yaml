@@ -10,8 +10,6 @@ services:
       - backend
     volumes:
       - .:/usr/app
-    depends_on:
-      - mongo
 networks:
   backend:
     driver: bridge

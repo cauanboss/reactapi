@@ -50,9 +50,9 @@ func (ur *UserRepository) FindAll() []dto.FindUser {
 }
 
 func (ur *UserRepository) CreateUser(u model.User) model.User {
-	fmt.Print("CreateUser")
-	ur.client.InsertOne(context.TODO(), u)
-	return u
+	user := model.User{Username: u.Username, Name: u.Name, Gender: u.Gender, Age: u.Age, Password: u.Password}
+	ur.client.InsertOne(context.TODO(), user)
+	return user
 }
 
 func (ur *UserRepository) DeleteOne(filter dto.Delete) (*mongo.DeleteResult, error) {

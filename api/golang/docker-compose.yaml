@@ -10,6 +10,18 @@ services:
       - backend
     volumes:
       - .:/usr/app
+  mongo: 
+    container_name: mongo
+    build: 
+      context: ../../mongodb
+      dockerfile: Dockerfile
+    volumes:
+      - ./data/db:/data/db
+    image: mongo  
+    ports:
+       - 27017:27017
+    networks:
+      - backend      
 networks:
   backend:
     driver: bridge
